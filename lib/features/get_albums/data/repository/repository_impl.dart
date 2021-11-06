@@ -10,7 +10,7 @@ import 'package:tdd_eds/features/get_albums/domain/entities/albums_entity.dart';
 import 'package:tdd_eds/features/get_albums/domain/repositories/albums_repository.dart';
 
 
-
+//TODO: remove this annotation
 typedef Future<List<AlbumsModel>> _ConcreteOrRandomChooser();
 
 class AlbumsRepositoryImpl implements AlbumsRepository{
@@ -22,19 +22,19 @@ class AlbumsRepositoryImpl implements AlbumsRepository{
 
   @override
   Future<Either<Failure, List<AlbumsEntity>>> getAlbums(int userId) async {
-    return _getTrivia(() => remoteDataSource.getAlbums(userId));
+    return _getAlbums(() => remoteDataSource.getAlbums(userId));
   }
 
 
-  Future<Either<Failure, List<AlbumsEntity>>> _getTrivia (
+  Future<Either<Failure, List<AlbumsEntity>>> _getAlbums (
       _ConcreteOrRandomChooser concreteOrRandomChooser
       )async{
     if(await networkInfo.isConnected){
 
       try{
-        final remoteTrivia = await concreteOrRandomChooser();
+        final remoteAlbums = await concreteOrRandomChooser();
 
-        return Right(remoteTrivia);
+        return Right(remoteAlbums);
 
       }on ServerException{
         return Left(ServerFailure());
