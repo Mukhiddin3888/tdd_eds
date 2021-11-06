@@ -15,7 +15,7 @@ abstract class AlbumsRemoteDataSource{
 
 class AlbumsRemoteDataSourceImpl implements AlbumsRemoteDataSource{
 
-  //final http.Client client;
+
   Dio dio = Dio();
 
   AlbumsRemoteDataSourceImpl({required this.dio});
@@ -26,7 +26,7 @@ class AlbumsRemoteDataSourceImpl implements AlbumsRemoteDataSource{
   Future<List<AlbumsModel>> _getAlbumsFromUrl( url)async{
 
 
-  //  final response =  await client.get(Uri.parse(url), headers: { "Content-Type": 'application/json'});
+
     final response =  await dio.get(url);
 
     if(response.statusCode == 200){

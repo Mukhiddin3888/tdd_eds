@@ -9,7 +9,7 @@ import 'package:tdd_eds/features/get_users/domain/entities/users_info_entity.dar
 import 'package:tdd_eds/features/get_users/domain/repositories/users_repository.dart';
 
 
-class GetUsersUseCase implements UseCase<List<UsersEntity>, Params>{
+class GetUsersUseCase implements UseCase<List<UsersEntity>, NoParams>{
 
 final UsersRepository usersRepository;
 
