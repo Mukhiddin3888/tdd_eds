@@ -25,7 +25,6 @@ class AlbumsNewBloc extends Bloc<AlbumsNewEvent, AlbumsNewState> {
       final failureOrAlbums = await getAlbumsUseCase(Params(number: event.userId));
 
 
-
       yield* _eitherLoadedOrErrorState(failureOrAlbums);
 
 

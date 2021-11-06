@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tdd_eds/features/get_albums/presentation/pages/albums_page.dart';
 import 'package:tdd_eds/features/get_users/presentation/pages/users_page.dart';
 import 'injection_container.dart' as di;
 
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
 
         primarySwatch: Colors.blue,
       ),
-      home: UsersScreen(),
+      home: AlbumsScreen(),
     );
   }
 }
