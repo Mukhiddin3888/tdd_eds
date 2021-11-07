@@ -6,6 +6,7 @@ import 'package:hive/hive.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:tdd_eds/core/network_info/network_info.dart';
+import 'package:tdd_eds/features/get_albums/data/data_sources/albums_local_data_source.dart';
 import 'package:tdd_eds/features/get_albums/data/data_sources/posts_local_data_source.dart';
 import 'package:tdd_eds/features/get_albums/data/data_sources/posts_remote_data_source.dart';
 import 'package:tdd_eds/features/get_albums/data/repository/posts_repository_impl.dart';
@@ -55,7 +56,7 @@ Future<void> init()  async {
   //repository
   
   sl.registerLazySingleton<AlbumsRepository>(
-          () => AlbumsRepositoryImpl(remoteDataSource: sl(), networkInfo: sl()));
+          () => AlbumsRepositoryImpl(remoteDataSource: sl(), networkInfo: sl(), localDataSource: sl()));
 
   sl.registerLazySingleton<PostsRepository>(
           () => PostsRepositoryImp(remoteDataSource: sl(), networkInfo: sl(), localDataSource: sl()));
@@ -63,6 +64,7 @@ Future<void> init()  async {
   // data sources
 
   sl.registerLazySingleton<AlbumsRemoteDataSource> (() => AlbumsRemoteDataSourceImpl(dio: sl()));
+  sl.registerLazySingleton<AlbumsLocalDataSource>(() => AlbumsLocalDataSourceImpl());
 
   sl.registerLazySingleton<PostsRemoteDataSource> (() => PostsRemoteDataSourceImpl(dio: sl()));
   sl.registerLazySingleton<PostsLocalDataSource>(() => PostsLocalDataSourceImpl());

@@ -34,8 +34,8 @@ class PostsRepositoryImp implements PostsRepository{
 
     }else{
       try{
-        final localTrivia = await localDataSource.getLastPosts(userId);
-        return Right(localTrivia as List<PostsEntity>);
+        final localData = await localDataSource.getLastPosts(userId);
+        return Right(localData as List<PostsEntity>);
       } on CacheException{
         return Left(CacheFailure());
       }
