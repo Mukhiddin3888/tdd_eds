@@ -3,7 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tdd_eds/core/styles/utils.dart';
 import 'package:tdd_eds/core/widgets/error_button.dart';
 import 'package:tdd_eds/features/get_albums/presentation/bloc/albums_new_bloc.dart';
+import 'package:tdd_eds/features/get_albums/presentation/posts_bloc/posts_bloc.dart';
 import 'package:tdd_eds/features/get_albums/presentation/widgets/albums_preview.dart';
+import 'package:tdd_eds/features/get_albums/presentation/widgets/posts_preview.dart';
 import 'package:tdd_eds/features/get_users/domain/entities/users_info_entity.dart';
 import 'package:tdd_eds/features/get_users/presentation/widgets/users_info_item.dart';
 
@@ -22,7 +24,8 @@ class UsersInfoScreen extends StatelessWidget {
       appBar: AppBar(title: Text(users.name),),
       body: MultiBlocProvider(
         providers: [
-          BlocProvider(create: (context) => sl<AlbumsNewBloc>())
+          BlocProvider(create: (context) => sl<AlbumsNewBloc>()),
+          BlocProvider(create: (context) => sl<PostsBloc>()),
         ],
         child:Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -83,20 +86,23 @@ class UsersInfoScreen extends StatelessWidget {
                       style: MyTextStyles.header2,
                     )),
 
-              /*  BlocBuilder<PostsBloc, PostsState>(
+                BlocBuilder<PostsBloc, PostsState>(
                   builder: (context, state) {
                     if (state is PostsInitial) {
-                      context.watch<PostsBloc>().add(GetPosts(userId: id));
+                      BlocProvider.of<PostsBloc>(context).add(GetPostsEvent(userId: users.id));
                       return Container();
                     }
                     if (state is PostsLoading) {
                       return Center(child: CircularProgressIndicator());
                     }
                     if (state is PostsLoaded) {
-                      return PostsPreView(userName: userName, state: state.posts,);
+                      return PostsPreView( state: state.postsEntity,);
                     }
-                    if (state is PostsError) {
-                      Hive.openBox<List>('posts');
+                    if (state is PostsLoadingError) {
+                      return  ErrorButton(onTap: () {
+                        BlocProvider.of<PostsBloc>(context).add(GetPostsEvent(userId: users.id));
+                      });
+                   /*   Hive.openBox<List>('posts');
                       var lposts = Hive.box<List>('posts').get('post$id') ?? [];
 
                       return lposts.length > 0
@@ -105,11 +111,12 @@ class UsersInfoScreen extends StatelessWidget {
                         context
                             .read<PostsBloc>()
                             .add(GetPosts(userId: id));
-                      });
-                    } else
-                      return SizedBox();
+                      });*/
+                    } else {
+                      return const SizedBox();
+                    }
                   },
-                ),*/
+                ),
 
                 const SizedBox(
                   height: 8,

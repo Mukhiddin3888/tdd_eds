@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:tdd_eds/core/errors/failure.dart';
+import 'package:tdd_eds/core/usecase/usecases.dart';
 import 'package:tdd_eds/features/get_albums/domain/entities/albums_entity.dart';
 import 'package:tdd_eds/features/get_albums/domain/usecase/get_albums_usecase.dart';
 

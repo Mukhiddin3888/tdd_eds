@@ -10,9 +10,10 @@ abstract class AlbumsNewEvent extends Equatable {
 class GetAlbumsEvent extends AlbumsNewEvent{
   final int userId;
 
-  GetAlbumsEvent({required this.userId});
+  const GetAlbumsEvent({required this.userId});
 
 
   @override
   List<Object> get props=> [userId];
 }
+
