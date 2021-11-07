@@ -21,13 +21,13 @@ class PostsLocalDataSourceImpl implements PostsLocalDataSource {
 
   @override
   Future<void> cachePosts(List postsToCache, int userId) {
-   return HiveStoreMe.putData(boxName: 'albums', keyWord: 'album$userId', data: postsToCache);
+   return HiveStoreMe.putData(boxName: 'posts', keyWord: 'post$userId', data: postsToCache);
 
   }
 
   @override
   List getLastPosts(int userId) {
-    var ldata =  Hive.box<List>('albums').get('album$userId') ;
+    var ldata =  Hive.box<List>('posts').get('post$userId') ;
 
     if(ldata != null){
       return ldata;

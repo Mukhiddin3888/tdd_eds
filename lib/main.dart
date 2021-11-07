@@ -9,7 +9,7 @@ void main() async{
   await di.init();
 
   Hive..registerAdapter(PostsEntityAdapter());
-  await Hive.openBox<List>('albums');
+  await Hive.openBox<List>('posts');
   runApp(const MyApp());
 }
 
