@@ -1,5 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tdd_eds/features/get_albums/presentation/pages/albums_page.dart';
 import 'package:tdd_eds/features/get_users/presentation/bloc/users_bloc.dart';
 import 'package:tdd_eds/injection_container.dart';
 
@@ -30,12 +32,17 @@ class UsersScreen extends StatelessWidget {
               return ListView.builder(
                 itemCount: state.usersEntity.length,
                   itemBuilder: (context, index) {
-                return ListTile(title:
-                    Text('${state.usersEntity[index].userName}'),);
+                return InkWell(
+                  onTap: (){
+                    Navigator.push(context, CupertinoPageRoute(builder: (context) => AlbumsScreen(),));
+                  },
+                  child: ListTile(title:
+                      Text(state.usersEntity[index].userName),),
+                );
               });
             }else
             if(state is UsersLoadingError){
-              return Text('${state.message}');
+              return Text(state.message);
             }else {
               return Container();
             }
