@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tdd_eds/core/styles/utils.dart';
-import 'package:tdd_eds/features/get_albums/presentation/pages/posts_page.dart';
+import 'package:tdd_eds/features/get_albums/presentation/pages/posts_list_page.dart';
+import 'package:tdd_eds/features/get_comments_and_photos/presentation/pages/posts_info_screen.dart';
 
 class PostsPreView extends StatelessWidget {
   const PostsPreView({
@@ -28,7 +29,8 @@ class PostsPreView extends StatelessWidget {
               const EdgeInsets.symmetric(vertical: 4),
               child: ListTile(
                 onTap: (){
-            //      Navigator.push(context, CupertinoPageRoute(builder: (context) => PostsScreen(state: state[index]),));
+                  Navigator.push(context,
+                      CupertinoPageRoute(builder: (context) => PostsInfoScreen(post: state[index],),));
                 },
                 title: Text(
                   '${state[index].title}',
