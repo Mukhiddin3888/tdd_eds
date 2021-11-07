@@ -3,6 +3,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tdd_eds/core/styles/utils.dart';
+import 'package:tdd_eds/features/get_albums/domain/entities/albums_entity.dart';
+import 'package:tdd_eds/features/get_albums/presentation/pages/albums_page.dart';
 
 
 
@@ -15,7 +17,7 @@ class AlbumsPreview extends StatelessWidget {
   }) : super(key: key);
 
   //final String userName;
-  final state;
+  final List<AlbumsEntity> state;
 
   @override
   Widget build(BuildContext context) {
@@ -60,15 +62,14 @@ class AlbumsPreview extends StatelessWidget {
             alignment: Alignment.bottomRight,
             child: GestureDetector(
                 onTap: () {
-            /*      Navigator.push(
+                  Navigator.push(
                       context,
                       CupertinoPageRoute(
                         builder: (context) =>
-                            AlbumsListScreen(
-                              userName: userName,
-                              albums: state,
+                            AlbumsScreen(
+                              state: state,
                             ),
-                      ));*/
+                      ));
                 },
                 child: Text(
                   'See all Albums',
