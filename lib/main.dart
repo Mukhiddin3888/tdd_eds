@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+import 'package:tdd_eds/features/get_albums/domain/entities/posts_entity.dart';
 import 'package:tdd_eds/features/get_users/presentation/pages/users_page.dart';
 import 'injection_container.dart' as di;
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await di.init();
+
+  Hive..registerAdapter(PostsEntityAdapter());
+  await Hive.openBox<List>('albums');
   runApp(const MyApp());
 }
 
