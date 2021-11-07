@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tdd_eds/features/get_albums/presentation/pages/albums_page.dart';
 import 'package:tdd_eds/features/get_users/presentation/bloc/users_bloc.dart';
+import 'package:tdd_eds/features/get_users/presentation/pages/users_info_screen.dart';
 import 'package:tdd_eds/injection_container.dart';
 
 
@@ -34,10 +34,17 @@ class UsersScreen extends StatelessWidget {
                   itemBuilder: (context, index) {
                 return InkWell(
                   onTap: (){
-                    Navigator.push(context, CupertinoPageRoute(builder: (context) => AlbumsScreen(),));
+                    Navigator.push(context, CupertinoPageRoute(
+                      builder: (context) => UsersInfoScreen(
+                        users: state.usersEntity[index],
+                      ),));
                   },
-                  child: ListTile(title:
-                      Text(state.usersEntity[index].userName),),
+                  child: ListTile(
+                    leading: const CircleAvatar(),
+                    title:
+                      Text(state.usersEntity[index].name),
+                  subtitle: Text(state.usersEntity[index].userName),
+                  ),
                 );
               });
             }else
