@@ -11,9 +11,14 @@ import 'package:tdd_eds/features/get_albums/domain/repositories/posts_repository
 import 'package:tdd_eds/features/get_albums/domain/usecase/get_posts.dart';
 import 'package:tdd_eds/features/get_albums/presentation/posts_bloc/posts_bloc.dart';
 import 'package:tdd_eds/features/get_comments_and_photos/data/data_sources/comments_remote_data_source.dart';
+import 'package:tdd_eds/features/get_comments_and_photos/data/data_sources/photos_remote_data_source.dart';
+import 'package:tdd_eds/features/get_comments_and_photos/data/repository/photos_repository_impl.dart';
 import 'package:tdd_eds/features/get_comments_and_photos/data/repository/repository_impl.dart';
 import 'package:tdd_eds/features/get_comments_and_photos/domain/repositories/comments_repository.dart';
+import 'package:tdd_eds/features/get_comments_and_photos/domain/repositories/photos_repository.dart';
+import 'package:tdd_eds/features/get_comments_and_photos/domain/usecase/get_photos_usecase.dart';
 import 'package:tdd_eds/features/get_comments_and_photos/presentation/comments_bloc/comments_bloc.dart';
+import 'package:tdd_eds/features/get_comments_and_photos/presentation/photos_bloc/photos_bloc.dart';
 import 'package:tdd_eds/features/get_users/data/data_sources/userss_remote_data_source.dart';
 import 'package:tdd_eds/features/get_users/domain/repositories/users_repository.dart';
 import 'package:tdd_eds/features/get_users/domain/usecase/get_users_usecase.dart';
@@ -91,10 +96,12 @@ Future<void> init()  async {
   // Bloc
 
   sl.registerFactory<CommentsBloc>(() => CommentsBloc( getUseCase: sl()));
+  sl.registerFactory<PhotosBloc>(() => PhotosBloc( getUseCase: sl()));
 
   // Use cases
 
   sl.registerLazySingleton(() => GetCommentsUseCase(repository: sl()));
+  sl.registerLazySingleton(() => GetPhotosUseCase(repository: sl()));
 
 
   //repository
@@ -102,9 +109,14 @@ Future<void> init()  async {
   sl.registerLazySingleton<CommentsRepository>(
           () => CommentsRepositoryImpl(remoteDataSource: sl(), networkInfo: sl()));
 
+  sl.registerLazySingleton<PhotosRepository>(
+          () => PhotosRepositoryImpl(remoteDataSource: sl(), networkInfo: sl()));
+
   // data sources
 
   sl.registerLazySingleton<CommentsRemoteDataSource> (() => CommentsRemoteDataSourceImpl(dio: sl()));
+
+  sl.registerLazySingleton<PhotosRemoteDataSource> (() => PhotosRemoteDataSourceImpl(dio: sl()));
 
 
 

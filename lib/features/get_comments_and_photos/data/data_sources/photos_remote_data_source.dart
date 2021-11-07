@@ -21,7 +21,7 @@ class PhotosRemoteDataSourceImpl implements PhotosRemoteDataSource{
   PhotosRemoteDataSourceImpl({required this.dio});
 
   @override
-  Future<List<PhotosModel>> getInfo(int albumId) => _getDataFromUrl('https://jsonplaceholder.typicode.com/comments?postId=$albumId');
+  Future<List<PhotosModel>> getInfo(int albumId) => _getDataFromUrl('https://jsonplaceholder.typicode.com/photos?albumId=$albumId');
 
   Future<List<PhotosModel>> _getDataFromUrl( url)async{
 
