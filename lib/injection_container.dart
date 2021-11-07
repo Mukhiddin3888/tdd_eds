@@ -10,6 +10,10 @@ import 'package:tdd_eds/features/get_albums/domain/repositories/albums_repositor
 import 'package:tdd_eds/features/get_albums/domain/repositories/posts_repository.dart';
 import 'package:tdd_eds/features/get_albums/domain/usecase/get_posts.dart';
 import 'package:tdd_eds/features/get_albums/presentation/posts_bloc/posts_bloc.dart';
+import 'package:tdd_eds/features/get_comments_and_photos/data/data_sources/comments_remote_data_source.dart';
+import 'package:tdd_eds/features/get_comments_and_photos/data/repository/repository_impl.dart';
+import 'package:tdd_eds/features/get_comments_and_photos/domain/repositories/comments_repository.dart';
+import 'package:tdd_eds/features/get_comments_and_photos/presentation/comments_bloc/comments_bloc.dart';
 import 'package:tdd_eds/features/get_users/data/data_sources/userss_remote_data_source.dart';
 import 'package:tdd_eds/features/get_users/domain/repositories/users_repository.dart';
 import 'package:tdd_eds/features/get_users/domain/usecase/get_users_usecase.dart';
@@ -19,6 +23,7 @@ import 'features/get_albums/data/data_sources/albums_remote_data_source.dart';
 import 'features/get_albums/data/repository/repository_impl.dart';
 import 'features/get_albums/domain/usecase/get_albums_usecase.dart';
 import 'features/get_albums/presentation/bloc/albums_new_bloc.dart';
+import 'features/get_comments_and_photos/domain/usecase/get_comments_usecase.dart';
 import 'features/get_users/data/repository/repository_impl.dart';
 
 final sl = GetIt.instance;
@@ -80,6 +85,26 @@ Future<void> init()  async {
   // data sources
 
   sl.registerLazySingleton<UsersRemoteDataSource> (() => UsersRemoteDataSourceImpl(dio: sl()));
+
+ /// features get Comments and Photos
+
+  // Bloc
+
+  sl.registerFactory<CommentsBloc>(() => CommentsBloc( getUseCase: sl()));
+
+  // Use cases
+
+  sl.registerLazySingleton(() => GetCommentsUseCase(repository: sl()));
+
+
+  //repository
+
+  sl.registerLazySingleton<CommentsRepository>(
+          () => CommentsRepositoryImpl(remoteDataSource: sl(), networkInfo: sl()));
+
+  // data sources
+
+  sl.registerLazySingleton<CommentsRemoteDataSource> (() => CommentsRemoteDataSourceImpl(dio: sl()));
 
 
 

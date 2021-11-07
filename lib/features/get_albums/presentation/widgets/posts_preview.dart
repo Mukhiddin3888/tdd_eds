@@ -52,7 +52,7 @@ class PostsPreView extends StatelessWidget {
                       context,
                       CupertinoPageRoute(
                         builder: (context) => PostsScreen(
-                         state: state,
+                         posts: state,
 
                         ),
                       ));

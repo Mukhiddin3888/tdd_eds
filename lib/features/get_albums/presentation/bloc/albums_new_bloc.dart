@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:tdd_eds/core/errors/failure.dart';
+import 'package:tdd_eds/core/errors/map_failure_to_message.dart';
 import 'package:tdd_eds/core/usecase/usecases.dart';
 import 'package:tdd_eds/features/get_albums/domain/entities/albums_entity.dart';
 import 'package:tdd_eds/features/get_albums/domain/usecase/get_albums_usecase.dart';
@@ -37,22 +38,11 @@ class AlbumsNewBloc extends Bloc<AlbumsNewEvent, AlbumsNewState> {
   Stream<AlbumsNewState> _eitherLoadedOrErrorState( Either<Failure,List<AlbumsEntity>> failureOrAlbums) async*{
 
     yield failureOrAlbums.fold(
-            (failure) => AlbumsLoadingError(_mapFailureToMessage(failure)),
+            (failure) => AlbumsLoadingError(mapFailureToMessage(failure)),
             (albums) => AlbumsLoaded(albums));
   }
 
-  String _mapFailureToMessage(Failure failure){
-    switch (failure.runtimeType){
-      case ServerFailure:
-        return 'Server Failure';
 
-      case CacheFailure:
-        return "Cache Failure";
-
-      default:
-        return "UnExpected Error";
-    }
-  }
 }
 
 
