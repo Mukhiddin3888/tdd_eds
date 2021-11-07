@@ -35,8 +35,8 @@ class AlbumsRepositoryImpl implements AlbumsRepository{
 
     }else{
       try{
-        final localData = await localDataSource.getLastAlbums(userId);
-        return Right(localData as List<AlbumsEntity>);
+        final List localData =  localDataSource.getLastAlbums(userId);
+        return Right(localData  as List<AlbumsEntity>);
       } on CacheException{
         return Left(CacheFailure());
       }

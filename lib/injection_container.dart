@@ -23,6 +23,7 @@ import 'package:tdd_eds/features/get_comments_and_photos/domain/repositories/pho
 import 'package:tdd_eds/features/get_comments_and_photos/domain/usecase/get_photos_usecase.dart';
 import 'package:tdd_eds/features/get_comments_and_photos/presentation/comments_bloc/comments_bloc.dart';
 import 'package:tdd_eds/features/get_comments_and_photos/presentation/photos_bloc/photos_bloc.dart';
+import 'package:tdd_eds/features/get_users/data/data_sources/users_local_data_source.dart';
 import 'package:tdd_eds/features/get_users/data/data_sources/userss_remote_data_source.dart';
 import 'package:tdd_eds/features/get_users/domain/repositories/users_repository.dart';
 import 'package:tdd_eds/features/get_users/domain/usecase/get_users_usecase.dart';
@@ -99,11 +100,12 @@ Future<void> init()  async {
   //repository
 
   sl.registerLazySingleton<UsersRepository>(
-          () => UsersRepositoryImpl(remoteDataSource: sl(), networkInfo: sl()));
+          () => UsersRepositoryImpl(remoteDataSource: sl(), networkInfo: sl(), localDataSource: sl()));
 
   // data sources
 
   sl.registerLazySingleton<UsersRemoteDataSource> (() => UsersRemoteDataSourceImpl(dio: sl()));
+  sl.registerLazySingleton<UsersLocalDataSource>(() => UsersLocalDataSourceImpl());
 
  /// features get Comments and Photos
 

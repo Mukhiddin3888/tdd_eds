@@ -16,7 +16,11 @@ abstract class UsersRemoteDataSource{
 class UsersRemoteDataSourceImpl implements UsersRemoteDataSource{
 
 
-  Dio dio = Dio();
+  Dio dio = Dio(BaseOptions(
+    connectTimeout: 35000,
+    receiveTimeout: 33000,
+    followRedirects: false,
+  ));
 
   UsersRemoteDataSourceImpl({required this.dio});
 
