@@ -12,11 +12,9 @@ import 'package:tdd_eds/features/get_albums/presentation/pages/albums_page.dart'
 class AlbumsPreview extends StatelessWidget {
   const AlbumsPreview({
     Key? key,
-//    required this.userName,
     required this.state,
   }) : super(key: key);
 
-  //final String userName;
   final List<AlbumsEntity> state;
 
   @override
@@ -34,25 +32,25 @@ class AlbumsPreview extends StatelessWidget {
         const SizedBox(
           height: 16,
         ),
-        AlbumsPreviewItem(state: state,
-            index: 0,
+        ListView.builder(
+          physics: const ClampingScrollPhysics(),
+          shrinkWrap: true,
+          itemCount: 3,
+          itemBuilder: (context, index) {
+          return  ListTile(
             onTap: (){
-       /*   Navigator.push(context, CupertinoPageRoute(builder: (context) => AlbumsScreen(
-              title: state[0].title, index: 1),));*/
-        }),
-        AlbumsPreviewItem(state: state,
-          index: 1,
-          onTap: (){
-    /*      Navigator.push(context, CupertinoPageRoute(builder: (context) => AlbumsScreen(
-              title: state[1].title, index: 2),));*/
+              /*   Navigator.push(context, CupertinoPageRoute(builder: (context) => AlbumsScreen(
+              title: state[0].title, index: 1),));*//*
+              });*/
+            },
+            title: Text(
+              state[index+1].title,
+              style: MyTextStyles.header3,
+              maxLines: 2,
+            ) ,
+            trailing: const Icon(Icons.keyboard_arrow_right),
+          );
         },),
-        AlbumsPreviewItem(state: state,
-          index: 2,
-          onTap: (){
-/*          Navigator.push(context, CupertinoPageRoute(builder: (context) => AlbumsScreen(
-              title: state[2].title, index: 3),));*/
-        },),
-
 
         const SizedBox(
           height: 16,
@@ -84,30 +82,4 @@ class AlbumsPreview extends StatelessWidget {
   }
 }
 
-class AlbumsPreviewItem extends StatelessWidget {
-  const AlbumsPreviewItem({
-    Key? key,
-    required this.state,
-    required this.onTap,
-    required this.index,
-  }) : super(key: key);
-
-  final  state;
-  final GestureTapCallback onTap;
-  final int index;
-
-
-  @override
-  Widget build(BuildContext context) {
-    return ListTile(
-      onTap: onTap,
-      title: Text(
-        '${state[index].title}',
-        style: MyTextStyles.header3,
-        maxLines: 2,
-      ) ,
-      trailing: const Icon(Icons.keyboard_arrow_right),
-    );
-  }
-}
 
