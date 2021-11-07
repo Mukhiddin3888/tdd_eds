@@ -5,7 +5,6 @@ import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:tdd_eds/core/errors/failure.dart';
 import 'package:tdd_eds/core/usecase/usecases.dart';
-import 'package:tdd_eds/features/get_users/domain/entities/users_info_entity.dart';
 import 'package:tdd_eds/features/get_users/domain/usecase/get_users_usecase.dart';
 
 part 'users_event.dart';
@@ -34,7 +33,7 @@ class UsersBloc extends Bloc<UsersEvent, UsersState> {
   }
 
 
-  Stream<UsersState> _eitherLoadedOrErrorState( Either<Failure,List<UsersEntity>> failureOrUsers) async*{
+  Stream<UsersState> _eitherLoadedOrErrorState( Either<Failure,List> failureOrUsers) async*{
 
     yield failureOrUsers.fold(
             (failure) => UsersLoadingError(_mapFailureToMessage(failure)),

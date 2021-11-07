@@ -102,16 +102,7 @@ class UsersInfoScreen extends StatelessWidget {
                       return  ErrorButton(onTap: () {
                         BlocProvider.of<PostsBloc>(context).add(GetPostsEvent(userId: users.id));
                       });
-                   /*   Hive.openBox<List>('posts');
-                      var lposts = Hive.box<List>('posts').get('post$id') ?? [];
 
-                      return lposts.length > 0
-                          ? PostsPreView(userName: userName, state: lposts)
-                          : ErrorButton(onTap: () {
-                        context
-                            .read<PostsBloc>()
-                            .add(GetPosts(userId: id));
-                      });*/
                     } else {
                       return const SizedBox();
                     }
@@ -138,15 +129,7 @@ class UsersInfoScreen extends StatelessWidget {
                       return ErrorButton(onTap: () {
                         BlocProvider.of<AlbumsNewBloc>(context).add(GetAlbumsEvent(userId: users.id));
                       });
-                /*      var lalbums =
-                          Hive.box<List>('albums').get('album$id') ?? [];
-                      return lalbums.length > 0
-                          ? AlbumsPreview(userName: userName, state: lalbums)
-                          : ErrorButton(onTap: () {
-                        context
-                            .read<AlbumsBloc>()
-                            .add(GetAlbums(userId: id));
-                      });*/
+
                     } else {
                       return const SizedBox();
                     }

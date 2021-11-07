@@ -2,8 +2,12 @@
 
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
+import 'package:hive/hive.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:tdd_eds/core/network_info/network_info.dart';
+import 'package:tdd_eds/features/get_albums/data/data_sources/albums_local_data_source.dart';
+import 'package:tdd_eds/features/get_albums/data/data_sources/posts_local_data_source.dart';
 import 'package:tdd_eds/features/get_albums/data/data_sources/posts_remote_data_source.dart';
 import 'package:tdd_eds/features/get_albums/data/repository/posts_repository_impl.dart';
 import 'package:tdd_eds/features/get_albums/domain/repositories/albums_repository.dart';
@@ -19,6 +23,7 @@ import 'package:tdd_eds/features/get_comments_and_photos/domain/repositories/pho
 import 'package:tdd_eds/features/get_comments_and_photos/domain/usecase/get_photos_usecase.dart';
 import 'package:tdd_eds/features/get_comments_and_photos/presentation/comments_bloc/comments_bloc.dart';
 import 'package:tdd_eds/features/get_comments_and_photos/presentation/photos_bloc/photos_bloc.dart';
+import 'package:tdd_eds/features/get_users/data/data_sources/users_local_data_source.dart';
 import 'package:tdd_eds/features/get_users/data/data_sources/userss_remote_data_source.dart';
 import 'package:tdd_eds/features/get_users/domain/repositories/users_repository.dart';
 import 'package:tdd_eds/features/get_users/domain/usecase/get_users_usecase.dart';
@@ -52,15 +57,18 @@ Future<void> init()  async {
   //repository
   
   sl.registerLazySingleton<AlbumsRepository>(
-          () => AlbumsRepositoryImpl(remoteDataSource: sl(), networkInfo: sl()));
+          () => AlbumsRepositoryImpl(remoteDataSource: sl(), networkInfo: sl(), localDataSource: sl()));
 
   sl.registerLazySingleton<PostsRepository>(
-          () => PostsRepositoryImp(remoteDataSource: sl(), networkInfo: sl()));
+          () => PostsRepositoryImp(remoteDataSource: sl(), networkInfo: sl(), localDataSource: sl()));
 
   // data sources
 
   sl.registerLazySingleton<AlbumsRemoteDataSource> (() => AlbumsRemoteDataSourceImpl(dio: sl()));
+  sl.registerLazySingleton<AlbumsLocalDataSource>(() => AlbumsLocalDataSourceImpl());
+
   sl.registerLazySingleton<PostsRemoteDataSource> (() => PostsRemoteDataSourceImpl(dio: sl()));
+  sl.registerLazySingleton<PostsLocalDataSource>(() => PostsLocalDataSourceImpl());
 
   //core
 
@@ -69,6 +77,13 @@ Future<void> init()  async {
   sl.registerLazySingleton(() => Dio());
 
   sl.registerLazySingleton(() => InternetConnectionChecker());
+
+  var directory = await getApplicationDocumentsDirectory();
+  Hive.init(directory.path);
+  
+  sl.registerLazySingleton(() => Hive);
+  
+ 
 
 
   /// features get Users
@@ -85,11 +100,12 @@ Future<void> init()  async {
   //repository
 
   sl.registerLazySingleton<UsersRepository>(
-          () => UsersRepositoryImpl(remoteDataSource: sl(), networkInfo: sl()));
+          () => UsersRepositoryImpl(remoteDataSource: sl(), networkInfo: sl(), localDataSource: sl()));
 
   // data sources
 
   sl.registerLazySingleton<UsersRemoteDataSource> (() => UsersRemoteDataSourceImpl(dio: sl()));
+  sl.registerLazySingleton<UsersLocalDataSource>(() => UsersLocalDataSourceImpl());
 
  /// features get Comments and Photos
 
@@ -117,8 +133,6 @@ Future<void> init()  async {
   sl.registerLazySingleton<CommentsRemoteDataSource> (() => CommentsRemoteDataSourceImpl(dio: sl()));
 
   sl.registerLazySingleton<PhotosRemoteDataSource> (() => PhotosRemoteDataSourceImpl(dio: sl()));
-
-
 
 
 }

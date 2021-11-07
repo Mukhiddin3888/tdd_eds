@@ -13,7 +13,7 @@ class UsersLoading extends UsersState {}
 
 class UsersLoaded extends UsersState {
 
-  final List<UsersEntity> usersEntity;
+  final List usersEntity;
 
   const UsersLoaded({required this.usersEntity});
 

@@ -4,8 +4,8 @@ import 'package:dartz/dartz.dart';
 import 'package:tdd_eds/core/errors/exeptions.dart';
 import 'package:tdd_eds/core/errors/failure.dart';
 import 'package:tdd_eds/core/network_info/network_info.dart';
+import 'package:tdd_eds/features/get_users/data/data_sources/users_local_data_source.dart';
 import 'package:tdd_eds/features/get_users/data/data_sources/userss_remote_data_source.dart';
-import 'package:tdd_eds/features/get_users/domain/entities/users_info_entity.dart';
 import 'package:tdd_eds/features/get_users/domain/repositories/users_repository.dart';
 
 
@@ -14,17 +14,20 @@ import 'package:tdd_eds/features/get_users/domain/repositories/users_repository.
 class UsersRepositoryImpl implements UsersRepository{
 
   final UsersRemoteDataSource remoteDataSource;
+  final UsersLocalDataSource localDataSource;
   final NetworkInfo networkInfo;
 
-  UsersRepositoryImpl({ required this.remoteDataSource, required this.networkInfo});
+  UsersRepositoryImpl({ required this.remoteDataSource,
+    required this.networkInfo, required this.localDataSource});
 
 
   @override
-  Future<Either<Failure, List<UsersEntity>>> getUsers() async {
+  Future<Either<Failure, List>> getUsers() async {
     if(await networkInfo.isConnected){
 
       try{
         final remoteUsers = await remoteDataSource.getUsers();
+        localDataSource.cacheData(remoteUsers);
 
         return Right(remoteUsers);
 
@@ -33,9 +36,12 @@ class UsersRepositoryImpl implements UsersRepository{
       }
 
     }else{
-
-      return Left(CacheFailure());
-
+      try{
+        final localData =  localDataSource.getLastData();
+        return Right(localData);
+      } on CacheException{
+        return Left(CacheFailure());
+      }
 
     }
   }

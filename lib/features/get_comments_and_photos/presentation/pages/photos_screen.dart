@@ -40,18 +40,11 @@ class AlbumsPhotoScreen extends StatelessWidget {
             }
             if(state is LoadingError){
 
-              return  ErrorButton(onTap: (){
-                BlocProvider.of<PhotosBloc>(context).add(GetPhotos(albumId: index));
-              });
-             /* var lphotos =  Hive.box<List>('photos').get('photo$index')?? []  ;
-              return lphotos.length > 0 ?
-              AlbumsPhotoItems(state: lphotos,)
-
-                  : Center(
+              return  Center(
                 child: ErrorButton(onTap: (){
-                  context.read<PhotosBloc>().add(GetPhotos(albumId: index));
+                  BlocProvider.of<PhotosBloc>(context).add(GetPhotos(albumId: index));
                 }),
-              );*/
+              );
             }
             else {
               return const SizedBox();
