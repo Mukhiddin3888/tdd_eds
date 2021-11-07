@@ -11,7 +11,7 @@ class AlbumsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Albums'),),
+      appBar: AppBar(title: const Text('Albums'),),
 
       body: BlocProvider(
         create: (_) => sl<AlbumsNewBloc>(),
@@ -25,7 +25,7 @@ class AlbumsScreen extends StatelessWidget {
               return const Center(child: Text('initial state'));
             } else
             if(state is AlbumsLoading){
-              return Center(child:  CircularProgressIndicator(),);
+              return const Center(child:  CircularProgressIndicator(),);
             }else
             if(state is AlbumsLoaded){
               return ListView.builder(

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tdd_eds/core/styles/utils.dart';
+import 'package:tdd_eds/features/get_albums/presentation/pages/posts_page.dart';
 
 class PostsPreView extends StatelessWidget {
   const PostsPreView({
@@ -27,7 +28,7 @@ class PostsPreView extends StatelessWidget {
               const EdgeInsets.symmetric(vertical: 4),
               child: ListTile(
                 onTap: (){
-              //    Navigator.push(context, CupertinoPageRoute(builder: (context) => PostsInfoScreen(post: state[index]),));
+            //      Navigator.push(context, CupertinoPageRoute(builder: (context) => PostsScreen(state: state[index]),));
                 },
                 title: Text(
                   '${state[index].title}',
@@ -38,7 +39,7 @@ class PostsPreView extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   maxLines: 1,
                 ),
-                trailing: Icon(Icons.keyboard_arrow_right),
+                trailing: const Icon(Icons.keyboard_arrow_right),
               ),
             );
           },
@@ -47,14 +48,14 @@ class PostsPreView extends StatelessWidget {
             alignment: Alignment.bottomRight,
             child: GestureDetector(
                 onTap: () {
-                /*  Navigator.push(
+                  Navigator.push(
                       context,
                       CupertinoPageRoute(
-                        builder: (context) => PostsList(
-                          posts: state,
-                          userName: userName,
+                        builder: (context) => PostsScreen(
+                         state: state,
+
                         ),
-                      ));*/
+                      ));
                 },
                 child: Text(
                   'See all posts',

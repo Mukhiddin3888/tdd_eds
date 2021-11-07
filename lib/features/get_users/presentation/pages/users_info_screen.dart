@@ -93,7 +93,7 @@ class UsersInfoScreen extends StatelessWidget {
                       return Container();
                     }
                     if (state is PostsLoading) {
-                      return Center(child: CircularProgressIndicator());
+                      return const Center(child: CircularProgressIndicator());
                     }
                     if (state is PostsLoaded) {
                       return PostsPreView( state: state.postsEntity,);
